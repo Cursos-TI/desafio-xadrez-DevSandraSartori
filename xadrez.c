@@ -4,8 +4,6 @@ int main() {
     // ==============================
     // MOVIMENTO DA TORRE (usando FOR)
     // ==============================
-    // A torre move-se em linha reta — aqui, 5 casas para a direita.
-
     int i; // variável de controle
     int casas_torre = 5; // número de casas que a torre vai se mover
 
@@ -17,8 +15,6 @@ int main() {
     // ===============================
     // MOVIMENTO DO BISPO (usando WHILE)
     // ===============================
-    // O bispo move-se na diagonal — aqui, 5 casas para cima e à direita.
-
     int casas_bispo = 5;
     int contador = 1;
 
@@ -31,8 +27,6 @@ int main() {
     // ===============================
     // MOVIMENTO DA RAINHA (usando DO-WHILE)
     // ===============================
-    // A rainha pode mover-se em todas as direções — aqui, 8 casas para a esquerda.
-
     int casas_rainha = 8;
     int posicao = 1;
 
@@ -41,6 +35,33 @@ int main() {
         printf("Esquerda (%d)\n", posicao);
         posicao++;
     } while (posicao <= casas_rainha);
+
+    // ===============================
+    // MOVIMENTO DO CAVALO (usando LOOPS ANINHADOS)
+    // ===============================
+    // O Cavalo move-se em "L":
+    // 2 casas para baixo e 1 casa para a esquerda.
+    // Usaremos um loop for (externo) e um loop while (interno).
+
+    int casas_baixo = 2;
+    int casas_esquerda = 1;
+    int passo_baixo, passo_esquerda;
+
+    printf("\n=== Movimento do Cavalo ===\n");
+
+    // Loop externo: movimenta o cavalo para baixo (2 casas)
+    for (passo_baixo = 1; passo_baixo <= casas_baixo; passo_baixo++) {
+        printf("Baixo (%d)\n", passo_baixo);
+
+        // Loop interno: após mover duas vezes para baixo, move uma para a esquerda
+        if (passo_baixo == casas_baixo) { // só move à esquerda depois do movimento para baixo
+            passo_esquerda = 1;
+            while (passo_esquerda <= casas_esquerda) {
+                printf("Esquerda (%d)\n", passo_esquerda);
+                passo_esquerda++;
+            }
+        }
+    }
 
     // ===============================
     // FIM DO PROGRAMA
