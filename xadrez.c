@@ -1,71 +1,97 @@
 #include <stdio.h>
 
-int main() {
-    // ==============================
-    // MOVIMENTO DA TORRE (usando FOR)
-    // ==============================
-    int i; // variável de controle
-    int casas_torre = 5; // número de casas que a torre vai se mover
+// =========================================================
+// FUNÇÕES RECURSIVAS — Torre, Bispo e Rainha
+// =========================================================
 
-    printf("=== Movimento da Torre ===\n");
-    for (i = 1; i <= casas_torre; i++) {
-        printf("Direita (%d)\n", i);
-    }
+// Função recursiva para o movimento da Torre (para a direita)
+void moverTorre(int casas, int atual) {
+    if (atual > casas) return; // Condição de parada
+    printf("Direita (%d)\n", atual);
+    moverTorre(casas, atual + 1); // Chamada recursiva
+}
 
-    // ===============================
-    // MOVIMENTO DO BISPO (usando WHILE)
-    // ===============================
-    int casas_bispo = 5;
-    int contador = 1;
+// Função recursiva para o movimento do Bispo (diagonal — cima e direita)
+// Com loops aninhados dentro da recursão
+void moverBispo(int casas, int passo) {
+    if (passo > casas) return; // Condição de parada
 
-    printf("\n=== Movimento do Bispo ===\n");
-    while (contador <= casas_bispo) {
-        printf("Cima, Direita (%d)\n", contador);
-        contador++;
-    }
-
-    // ===============================
-    // MOVIMENTO DA RAINHA (usando DO-WHILE)
-    // ===============================
-    int casas_rainha = 8;
-    int posicao = 1;
-
-    printf("\n=== Movimento da Rainha ===\n");
-    do {
-        printf("Esquerda (%d)\n", posicao);
-        posicao++;
-    } while (posicao <= casas_rainha);
-
-    // ===============================
-    // MOVIMENTO DO CAVALO (usando LOOPS ANINHADOS)
-    // ===============================
-    // O Cavalo move-se em "L":
-    // 2 casas para baixo e 1 casa para a esquerda.
-    // Usaremos um loop for (externo) e um loop while (interno).
-
-    int casas_baixo = 2;
-    int casas_esquerda = 1;
-    int passo_baixo, passo_esquerda;
-
-    printf("\n=== Movimento do Cavalo ===\n");
-
-    // Loop externo: movimenta o cavalo para baixo (2 casas)
-    for (passo_baixo = 1; passo_baixo <= casas_baixo; passo_baixo++) {
-        printf("Baixo (%d)\n", passo_baixo);
-
-        // Loop interno: após mover duas vezes para baixo, move uma para a esquerda
-        if (passo_baixo == casas_baixo) { // só move à esquerda depois do movimento para baixo
-            passo_esquerda = 1;
-            while (passo_esquerda <= casas_esquerda) {
-                printf("Esquerda (%d)\n", passo_esquerda);
-                passo_esquerda++;
-            }
+    // Loop aninhado — movimento vertical (externo) e horizontal (interno)
+    for (int vertical = 1; vertical <= 1; vertical++) {
+        for (int horizontal = 1; horizontal <= 1; horizontal++) {
+            printf("Cima, Direita (%d)\n", passo);
         }
     }
 
-    // ===============================
+    moverBispo(casas, passo + 1); // Chamada recursiva
+}
+
+// Função recursiva para o movimento da Rainha (para a esquerda)
+void moverRainha(int casas, int atual) {
+    if (atual > casas) return; // Condição de parada
+    printf("Esquerda (%d)\n", atual);
+    moverRainha(casas, atual + 1); // Chamada recursiva
+}
+
+// =========================================================
+// FUNÇÃO PRINCIPAL — Inclui também o movimento do Cavalo
+// =========================================================
+
+int main() {
+    // ======================================
+    // MOVIMENTO DA TORRE (Recursividade)
+    // ======================================
+    int casas_torre = 5;
+    printf("=== Movimento da Torre ===\n");
+    moverTorre(casas_torre, 1);
+
+    // ======================================
+    // MOVIMENTO DO BISPO (Recursividade + Loops Aninhados)
+    // ======================================
+    int casas_bispo = 5;
+    printf("\n=== Movimento do Bispo ===\n");
+    moverBispo(casas_bispo, 1);
+
+    // ======================================
+    // MOVIMENTO DA RAINHA (Recursividade)
+    // ======================================
+    int casas_rainha = 8;
+    printf("\n=== Movimento da Rainha ===\n");
+    moverRainha(casas_rainha, 1);
+
+    // ======================================
+    // MOVIMENTO DO CAVALO (Loops Complexos)
+    // ======================================
+    // Cavalo move-se em “L”: 2 casas para cima e 1 para a direita
+    // Usando loops aninhados, múltiplas variáveis e controle de fluxo
+
+    int vertical, horizontal;
+    int casas_cima = 2;
+    int casas_direita = 1;
+
+    printf("\n=== Movimento do Cavalo ===\n");
+
+    // Loop externo controla o movimento vertical
+    for (vertical = 1; vertical <= casas_cima; vertical++) {
+        if (vertical == 2) {
+            // Quando chega na segunda casa para cima, prepara para virar à direita
+            for (horizontal = 1; horizontal <= casas_direita; horizontal++) {
+                printf("Direita (%d)\n", horizontal);
+                // Se o cavalo já moveu 1 casa para a direita, interrompe
+                if (horizontal == casas_direita) break;
+            }
+        }
+
+        // Imprime o movimento para cima
+        printf("Cima (%d)\n", vertical);
+
+        // Caso especial: se o cavalo já foi para cima 2 vezes, interrompe o loop
+        if (vertical == casas_cima) continue;
+    }
+
+    // ======================================
     // FIM DO PROGRAMA
-    // ===============================
+    // ======================================
     printf("\nSimulação concluída!\n");
 
     return 0;
